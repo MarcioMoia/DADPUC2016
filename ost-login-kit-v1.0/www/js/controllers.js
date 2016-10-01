@@ -9,27 +9,21 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  var db = new restdb("816dcae7ddca17f3f1b070f2e10db0198b1c1");
-
   // Form data for the login modal
-  $scope.loginData =[];
+  $scope.loginData = {};
 
   //--------------------------------------------
    $scope.login = function(user) {
-   	//$scope.showAlert('Funcao de login');
-
-   	$scope.GetBanco();
 			
 		if(typeof(user)=='undefined'){
 			$scope.showAlert('Please fill username and password to proceed.');	
 			return false;
 		}
 
-		if(user.cpf=='demo@gmail.com' && user.senha=='demo'){
+		if(user.username=='demo@gmail.com' && user.password=='demo'){
 			$location.path('/app/dashboard');
 		}else{
-			//$scope.showAlert('Invalid username or password.');	
-			$scope.showAlert('a');
+			$scope.showAlert('Invalid username or password.');	
 		}
 		
 	};
@@ -43,14 +37,6 @@ angular.module('starter.controllers', [])
 		 template: msg
 	   });
 	 };
-
-	 $scope.GetBanco = function() {
-		$scope.showAlert('Entrei na funcao');
-    	$http.get('https://tpdb-2a26.restdb.io/rest/user').then(function(response) {
-    		$scope.showAlert('Peguei os dados');
-            $scope.loginData = response.data;
-        });
-	};
   //--------------------------------------------
 })
 
@@ -65,6 +51,4 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope, $stateParams , Profiles) {
 	$scope.profiles = Profiles.all();
 });
-
-
 
