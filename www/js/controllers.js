@@ -8,8 +8,7 @@ angular.module('starter.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
-  var db = new restdb("816dcae7ddca17f3f1b070f2e10db0198b1c1");
+  var db = new restdb("57f03cbe8d875fc707b1bded");
 
   // Form data for the login modal
   $scope.loginData =[];

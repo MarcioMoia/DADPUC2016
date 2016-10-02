@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.ost01638294" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>ost01</name>
+  <name>AplicativoDD</name>
   <description>
-        An Ionic Framework and Cordova project.
+        Um Aplicativo Distribuido, para a disciplina de Desenvolvimento de Aplicacoes Distribuidas, da PUC Minas
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+  <author email="marcelo.aguilar@sga.pucminas.br" href="http://github.com/celoficial">
+      Marcelo Rocha
     </author>
   <content src="index.html"/>
   <access origin="*"/>
