@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,  $location, $ionicPopup, $http) {
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,  $location, $ionicPopup, $http, LoginService) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -42,13 +42,20 @@ angular.module('starter.controllers', [])
 	   });
 	 };
 
-	 $scope.GetBanco = function() {
-		$scope.showAlert('Entrei na funcao');
-    	$http.get('https://tpdb-2a26.restdb.io/rest/user', 
-    		{headers:{'x-apikey':'57f527fe8d875fc707b1be3d'}}).then(function(response) {
-    		$scope.loginData = response.data;
-    		console.log($scope.loginData);
-            $scope.showAlert('Peguei os dados');
+	 $scope.GetBanco = function(LocalizarService) {
+		 var promise = LoginService.logar();
+		 promise.then(function (data) {
+            $scope.dados = data.data;
+			angular.forEach($scope.dados, function(value, key){
+				console.log(value);
+				console.log(value.cpf);
+				console.log(value.senha);
+				console.log("indíce: " + key);
+			});        
+        },function(erro) {
+              console.log('Erro : ' + JSON.stringify(erro));
+        }, function(update) {
+              console.log('Got notification: ' + update);
         });
 	};
   //--------------------------------------------

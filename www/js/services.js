@@ -2,6 +2,22 @@
 
 angular.module('starter.services', [])
 
+
+.service('LoginService', function ($http, $q) {
+      
+        this.logar = function () {
+        var deferred = $q.defer();
+        console.log("enviando request");//apague depois
+        $http.get('https://tpdb-2a26.restdb.io/rest/user', {headers:{'x-apikey':'57f527fe8d875fc707b1be3d'}}).then(function (response){
+          deferred.resolve(response);
+          console.log("request ok"); //apague depois
+        },function (rejected) {
+          console.log("rejeitado" + JSON.stringify(rejected));
+        });
+        return deferred.promise;
+      } 
+})
+
 .factory('Profiles', function() {
   // Might use a resource here that returns a JSON array
 
