@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,  $location, $ionicPopup) {
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,  $location, $ionicPopup, $http) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-  var db = new restdb("57f03cbe8d875fc707b1bded");
+  var db = new restdb("816dcae7ddca17f3f1b070f2e10db0198b1c1");
 
   // Form data for the login modal
   $scope.loginData =[];
@@ -45,9 +45,9 @@ angular.module('starter.controllers', [])
 
 	 $scope.GetBanco = function() {
 		$scope.showAlert('Entrei na funcao');
-    	$http.get('https://tpdb-2a26.restdb.io/rest/user').then(function(response) {
-    		$scope.showAlert('Peguei os dados');
-            $scope.loginData = response.data;
+    	$http.get('https://tpdb-2a26.restdb.io/rest/user', {headers:{'x-apikey':'816dcae7ddca17f3f1b070f2e10db0198b1c1'}}).then(function(response) {
+    		$scope.loginData = response.data;
+            $scope.showAlert('Peguei os dados');
         });
 	};
   //--------------------------------------------
@@ -64,6 +64,3 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope, $stateParams , Profiles) {
 	$scope.profiles = Profiles.all();
 });
-
-
-
