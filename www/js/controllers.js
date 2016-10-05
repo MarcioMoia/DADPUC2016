@@ -7,11 +7,10 @@ angular.module('starter.controllers', [])
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
-  //});
-  var db = new restdb("816dcae7ddca17f3f1b070f2e10db0198b1c1");
+  //})
 
   // Form data for the login modal
-  $scope.loginData =[];
+  $scope.loginData ={};
 
   //--------------------------------------------
    $scope.login = function(user) {
@@ -45,8 +44,10 @@ angular.module('starter.controllers', [])
 
 	 $scope.GetBanco = function() {
 		$scope.showAlert('Entrei na funcao');
-    	$http.get('https://tpdb-2a26.restdb.io/rest/user', {headers:{'x-apikey':'816dcae7ddca17f3f1b070f2e10db0198b1c1'}}).then(function(response) {
+    	$http.get('https://tpdb-2a26.restdb.io/rest/user', 
+    		{headers:{'x-apikey':'57f527fe8d875fc707b1be3d'}}).then(function(response) {
     		$scope.loginData = response.data;
+    		console.log($scope.loginData);
             $scope.showAlert('Peguei os dados');
         });
 	};
