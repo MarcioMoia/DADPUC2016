@@ -2,6 +2,32 @@
 
 angular.module('starter.services', [])
 
+
+.service('LoginService', function ($http, $q) {
+      
+        this.logar = function () {
+        var deferred = $q.defer();
+        $http.get("https://tpdb-2a26.restdb.io/rest/user", {headers:{'x-apikey':'57f527fe8d875fc707b1be3d'}}).then(function (response){
+          deferred.resolve(response);
+        },function (rejected) {
+          console.log("rejeitado" + JSON.stringify(rejected));
+        });
+        return deferred.promise;
+      } 
+
+      this.CadastroUsuario = function(user)
+      {
+        var deferred = $q.defer();
+        $http.post("https://tpdb-2a26.restdb.io/rest/user", {cpf:user.cpf,senha:user.senha,cidade:user.cidade},
+        { headers:{'x-apikey':'57f527fe8d875fc707b1be3d'}}).then(function (response){
+          deferred.resolve(response);
+        },function (rejected) {
+          console.log("rejeitado" + JSON.stringify(rejected));
+        });
+        return deferred.promise;
+      }
+})
+
 .factory('Profiles', function() {
   // Might use a resource here that returns a JSON array
 
