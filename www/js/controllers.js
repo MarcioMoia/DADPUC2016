@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,  $location, $ionicPopup, $http, LoginService) {
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,  $location, $ionicPopup, $http, LoginService, $q) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -10,27 +10,82 @@ angular.module('starter.controllers', [])
   //})
 
   // Form data for the login modal
-  $scope.loginData ={};
+ $scope.loginData ={};
+
 
   //--------------------------------------------
    $scope.login = function(user) {
-   	//$scope.showAlert('Funcao de login');
-
-   	$scope.GetBanco();
-			
+   		
 		if(typeof(user)=='undefined'){
 			$scope.showAlert('Please fill username and password to proceed.');	
 			return false;
 		}
 
-		if(user.cpf=='demo@gmail.com' && user.senha=='demo'){
-			$location.path('/app/dashboard');
+		$scope.VerificaLogin(user);
+
+		/*if(loginAutorizado == true){
+			
 		}else{
-			//$scope.showAlert('Invalid username or password.');	
-			$scope.showAlert('a');
-		}
+				
+			
+		}*/
 		
 	};
+
+	$scope.cadastrar = function(user)
+	{
+
+		if (user == 'undefined')
+		{
+			$scope.showAlert('Please fill the fields.');
+			return false;
+		}
+		if (user.cpf == 'undefined')
+		{
+			$scope.showAlert('Please fill the fields.');
+			return false;
+		}
+		if (user.senha == 'undefined')
+		{
+			$scope.showAlert('Please fill the fields.');
+			return false;
+		}
+		if (user.cidade == 'undefined')
+		{
+			$scope.showAlert('Please fill the fields.');
+			return false;
+		}
+
+		 var promise = $scope.PostBanco(user);
+	};
+
+	$scope.VerificaLogin = function(user)
+	{
+		
+		var logouFlag = false;
+	
+		$scope.GetBanco()
+		.then(function(response){
+			console.log("retornando");
+		for(i = 0; i < $scope.loginData.length;i++)
+		{
+				if((user.cpf == $scope.loginData[i].cpf) && (user.senha == $scope.loginData[i].senha))
+				{
+					$location.path('/app/dashboard');
+					logouFlag = true;
+					break;
+				}
+		}	
+
+		if(logouFlag == false)
+		{
+			$scope.showAlert('Invalid username or password.');
+		}
+		});
+
+	};
+
+
   //--------------------------------------------
   $scope.logout = function() {   $location.path('/app/login');   };
   //--------------------------------------------
@@ -42,21 +97,34 @@ angular.module('starter.controllers', [])
 	   });
 	 };
 
-	 $scope.GetBanco = function(LocalizarService) {
+	 $scope.GetBanco = function() {
 		 var promise = LoginService.logar();
 		 promise.then(function (data) {
-            $scope.dados = data.data;
-			angular.forEach($scope.dados, function(value, key){
-				console.log(value);
-				console.log(value.cpf);
-				console.log(value.senha);
-				console.log("indíce: " + key);
-			});        
+            $scope.loginData = data.data;
+            return $q.all(promise);
+            console.log("Tamanho depois: " + $scope.loginData.length);
         },function(erro) {
               console.log('Erro : ' + JSON.stringify(erro));
         }, function(update) {
               console.log('Got notification: ' + update);
         });
+
+		return promise; 
+		
+	};
+
+	 $scope.PostBanco = function(user) {
+		 var promise = LoginService.CadastroUsuario(user);
+		 promise.then(function (data) {
+            $scope.loginData = data.data;
+        },function(erro) {
+              console.log('Erro : ' + JSON.stringify(erro));
+        }, function(update) {
+              console.log('Got notification: ' + update);
+        });
+
+		return promise; 
+		
 	};
   //--------------------------------------------
 })
